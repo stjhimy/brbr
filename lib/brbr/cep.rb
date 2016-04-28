@@ -31,7 +31,7 @@ class CEP
   #
   # Exemplo:
   #  BuscaEndereco.cep(22640100) ==> {:tipo_logradouro => 'Avenida', :logradouro => 'das Américas', :bairro => 'Barra da Tijuca', :uf => 'RJ', :cidade => 'Rio de Janeiro', :cep => '22640100'}
-  def self.cep(numero)
+  def self.busca(numero)
     cep = numero.to_s.gsub(/[\.-]/, '')
     raise "O CEP informado possui um formato inválido." unless cep.to_s.match(/^\d{8}$/)
     
