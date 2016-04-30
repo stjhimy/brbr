@@ -17,14 +17,22 @@ describe CEP do
 
   INVALID_ZIPS.each do |invalid_zip|
     it "test_raise_for_invalid_zip_code_#{invalid_zip}" do
-      expect { CEP.busca(invalid_zip) }.to raise_error(RuntimeError, 'O CEP informado possui um formato inválido.')
+      expect { CEP.busca(invalid_zip) }.to raise_error(RuntimeError)
     end
   end
 
   VALID_ZIPS.each do |valid_zip|
     it "test_valid_code_#{valid_zip}" do
       cep = valid_zip
-      expected = { tipo_logradouro: 'Avenida', logradouro: 'das Américas', bairro: 'Barra da Tijuca', cidade: 'Rio de Janeiro', uf: 'RJ', cep: cep.to_s }
+
+      expected = {
+        tipo_logradouro: 'Avenida',
+        logradouro: 'das Américas',
+        bairro: 'Barra da Tijuca',
+        cidade: 'Rio de Janeiro',
+        uf: 'RJ',
+        cep: cep.to_s
+      }
       body = expected.to_json
 
       FakeWeb.register_uri(:get, "#{URL}#{cep}", body: body)
@@ -36,7 +44,15 @@ describe CEP do
   VALID_ZIPS_WITH_ZERO_AT_BEGINNING.each do |valid_zip|
     it "test_valid_code_#{valid_zip}" do
       cep = VALID_ZIPS_WITH_ZERO_AT_BEGINNING.first
-      expected = { tipo_logradouro: 'Avenida', logradouro: "Raimundo Pereira de Magalhães", bairro: 'Jardim Iris', cidade: "São Paulo", uf: 'SP', cep: cep }
+
+      expected = {
+        tipo_logradouro: 'Avenida',
+        logradouro: "Raimundo Pereira de Magalhães",
+        bairro: 'Jardim Iris',
+        cidade: "São Paulo",
+        uf: 'SP',
+        cep: cep
+      }
       body = expected.to_json
 
       FakeWeb.register_uri(:get, "#{URL}#{cep}", body: body)
