@@ -8,7 +8,10 @@ class CEP
 
   def self.busca(numero)
     cep = numero.to_s.gsub(/[\.-]/, '')
-    raise "O CEP informado possui um formato inválido." unless cep.to_s =~ /^\d{8}$/
+
+    unless cep.to_s =~ /^\d{8}$/
+      raise "O CEP informado possui um formato inválido."
+    end
 
     response = Net::HTTP.get_response(URI.parse("#{WEBSERVICE_URL}#{cep}"))
 
